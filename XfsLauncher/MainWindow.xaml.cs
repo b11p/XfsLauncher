@@ -101,7 +101,7 @@ namespace XfsLauncher
 
             try
             {
-                var startInfo = new ProcessStartInfo("cmd", "/K " + gocqExe);
+                var startInfo = new ProcessStartInfo("cmd", "/K \"" + gocqExe + "\"");
                 startInfo.WorkingDirectory = gocqDir;
                 startInfo.UseShellExecute = true;
                 using var process = Process.Start(startInfo);
