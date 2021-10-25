@@ -101,12 +101,16 @@ namespace XfsLauncher
 
             try
             {
-                Environment.CurrentDirectory = gocqDir;
-                var startInfo = new ProcessStartInfo("go-cqhttp.exe");
+                var startInfo = new ProcessStartInfo("cmd", "/K " + gocqExe);
                 startInfo.WorkingDirectory = gocqDir;
                 startInfo.UseShellExecute = true;
-                using var process = Process.Start(gocqExe);
-                await process.WaitForExitAsync();
+                using var process = Process.Start(startInfo);
+                if (process is null)
+                {
+                    MessageBox.Show(this, "go-cqhttp 未正常启动。");
+                    return;
+                }
+                await process.WaitForExitAsync().ConfigureAwait(true);
                 if (process.ExitCode != 0)
                 {
                     MessageBox.Show(this, "go-cqhttp 已被非正常终止。");
