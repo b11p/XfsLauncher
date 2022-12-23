@@ -29,21 +29,9 @@ namespace XfsLauncher
             LoadAsync();
         }
 
-        private string ExeDir
-        {
-            get
-            {
-                var fromAssembly = Path.GetDirectoryName(typeof(MainWindow).Assembly.Location) ?? typeof(MainWindow).Assembly.Location;
-                var fromProcess = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule?.FileName);
-                return !string.IsNullOrEmpty(fromAssembly)
-                    ? fromAssembly
-                    : fromProcess?.EndsWith("dotnet.exe", StringComparison.OrdinalIgnoreCase) == false
-                    ? fromProcess
-                    : Directory.GetCurrentDirectory();
-            }
-        }
+        private static string ExeDir => System.AppContext.BaseDirectory;
 
-        private string GocqDir => Path.Combine(ExeDir, "go-cqhttp");
+        private static string GocqDir => Path.Combine(ExeDir, "go-cqhttp");
 
         public string Selected => (string)VersionCombo.SelectedItem;
 
